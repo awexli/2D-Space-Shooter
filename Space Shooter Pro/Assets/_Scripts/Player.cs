@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
     private float _speed = 5.5f;
     private int _upperBound = 0;
     private float _lowerBound = -3.8f;
-    private int _rightBound = 11;
-    private int _leftBound = -11;
+    private float _rightBound = 11.3f;
+    private float _leftBound = -11.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,39 +21,34 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        PlayerMovement();
+        PlayerBounds();
+    }
 
-        #region Player Movements
-        // new Vector3(3.5, 0, 0) * horizontalInput * _speed * real time
-        //transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
-        //transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
-
+    void PlayerMovement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
-        Vector3 direction = new Vector3 (horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
-        #endregion
+    }
 
-        #region Player Bounds
+    void PlayerBounds()
+    {
         float yPosition = transform.position.y;
         float xPosition = transform.position.x;
 
-        if (yPosition >= _upperBound) 
-        {
-            transform.position = new Vector3(xPosition, _upperBound, 0);
-        } else if (yPosition <= _lowerBound)
-        {
-            transform.position = new Vector3(xPosition, _lowerBound, 0);
-        }
+        // Mathf.Clamp(value_to_clamp, min, max)
+        transform.position = new Vector3(xPosition, Mathf.Clamp(yPosition, _lowerBound, _upperBound), 0);
 
-        if (xPosition >= _rightBound) 
+        if (xPosition >= _rightBound)
         {
             transform.position = new Vector3(_leftBound, yPosition, 0);
-        } else if (xPosition <= _leftBound) 
+        }
+        else if (xPosition <= _leftBound)
         {
             transform.position = new Vector3(_rightBound, yPosition, 0);
         }
-        #endregion
-
     }
 }
