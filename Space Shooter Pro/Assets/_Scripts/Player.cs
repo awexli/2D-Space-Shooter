@@ -2,30 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Boundary 
+{
+    // yMax = 0f
+    // yMin = 3.8f
+    // xMax = 11.3f
+    // xMin = -11.3f
+    public float yMax, yMin, xMax, xMin;
+}
+
 public class Player : MonoBehaviour
 {
+    public Boundary boundary;
     [SerializeField]
-    private float _speed = 5.5f;
-    private int _upperBound = 0;
-    private float _lowerBound = -3.8f;
-    private float _rightBound = 11.3f;
-    private float _leftBound = -11.3f;
+    private float _speed = 9.5f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = -1f;
+    [SerializeField]
+    private float tilt;
 
     void Start()
     {
         // take current position = new position (0, 0, 0)
-        transform.position = new Vector3(0, _lowerBound, 0);
+        transform.position = new Vector3(0, boundary.yMin, 0);
     }
 
     void Update()
     {
-        PlayerMovement();
-        PlayerBounds();
         
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
@@ -34,8 +41,17 @@ public class Player : MonoBehaviour
 
     }
 
+    void FixedUpdate()
+    {
+        PlayerMovement();
+        PlayerBounds();
+    }
+
     void FireLaser()
     {
+        // Could also make a child laerSpawn object to player
+        // position laserSpawn object in front of player
+        // use the transform.position of laserSpawn
         Vector3 laserSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
 
         _canFire = Time.time + _fireRate;
@@ -48,22 +64,37 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         transform.Translate(direction * _speed * Time.deltaTime);
+
+        // Player tilt
+        transform.rotation = Quaternion.Euler 
+        (
+            0.0f, 
+            horizontalInput * -tilt, 
+            0.0f
+        );
     }
     void PlayerBounds()
     {
         float yPosition = transform.position.y;
         float xPosition = transform.position.x;
 
+        // Clamp y boundaries
         // Mathf.Clamp(value_to_clamp, min, max)
-        transform.position = new Vector3(xPosition, Mathf.Clamp(yPosition, _lowerBound, _upperBound), 0);
+        transform.position = new Vector3
+        (
+            xPosition, 
+            Mathf.Clamp(yPosition, boundary.yMin, boundary.yMax), 
+            0
+        );
 
-        if (xPosition >= _rightBound)
+        // Loop x boundaries
+        if (xPosition >= boundary.xMax)
         {
-            transform.position = new Vector3(_leftBound, yPosition, 0);
+            transform.position = new Vector3(boundary.xMin, yPosition, 0);
         }
-        else if (xPosition <= _leftBound)
+        else if (xPosition <= boundary.xMin)
         {
-            transform.position = new Vector3(_rightBound, yPosition, 0);
+            transform.position = new Vector3(boundary.xMax, yPosition, 0);
         }
     }
 }
