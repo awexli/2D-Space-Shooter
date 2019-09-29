@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
     private float _canFire = -1f;
     [SerializeField]
     private float tilt;
+    [SerializeField]
+    private int _lives = 3;
 
     void Start()
     {
@@ -45,6 +47,17 @@ public class Player : MonoBehaviour
     {
         PlayerMovement();
         PlayerBounds();
+    }
+
+    public void Damage()
+    {
+        _lives--;
+
+        Debug.Log("Lives remaining: " + _lives);
+
+        if (_lives < 1) {
+            Destroy(this.gameObject);
+        }
     }
 
     void FireLaser()
