@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         // Could also make a child laserSpawn object to player
         // position laserSpawn object in front of player
         // use the transform.position of laserSpawn
-        Vector3 laserSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
+        Vector3 laserSpawn = new Vector3(transform.position.x, transform.position.y + 1f, 0);
 
         _canFire = Time.time + _fireRate;
         Instantiate(_laserPrefab, laserSpawn, Quaternion.identity);
