@@ -36,4 +36,4 @@ sysinfo.txt
 *.unitypackage
 
 # Local folders to ignore
-Assets/
+Assets/GameAssets/
