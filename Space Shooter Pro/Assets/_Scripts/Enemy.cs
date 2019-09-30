@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public Boundary boundary;
     public float enemySpeed;
-    
+
     void Start()
     {
         //transform.position = new Vector3(0, boundary.yMax, 0);
@@ -19,16 +19,16 @@ public class Enemy : MonoBehaviour
         // if bottom of screen, respawn at top with new random x pos
         if (transform.position.y <= boundary.yMin)
         {
-            float randomX = Random.Range(boundary.xMin, boundary.xMax);
-            
-            transform.position = new Vector3
-            (
-                randomX,
-                boundary.yMax,
-                0
-            );
+           RandomizeSpawn();
         }
 
+    }
+    public Vector3 RandomizeSpawn()
+    {
+        float randomX = Random.Range(boundary.xMin, boundary.xMax);
+        Vector3 randomSpawn = new Vector3(randomX, boundary.yMax, 0);
+
+        return transform.position = randomSpawn;
     }
 
     private void OnTriggerEnter(Collider other)

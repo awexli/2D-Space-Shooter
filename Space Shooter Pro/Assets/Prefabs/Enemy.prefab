@@ -106,8 +106,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boundary:
-    yMax: 7.35
-    yMin: -5.35
+    yMax: 6.5
+    yMin: -6.5
     xMax: 9
     xMin: -9
   enemySpeed: 4

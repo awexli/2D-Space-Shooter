@@ -25,12 +25,17 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float tilt;
     [SerializeField]
-    private int _lives = 3;
+    private int lives = 3;
+    private SpawnManager _spawnManager;
 
     void Start()
     {
-        // take current position = new position (0, 0, 0)
-        transform.position = new Vector3(0, boundary.yMin, 0);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager reference is null");
+        }
     }
 
     void Update()
@@ -51,18 +56,19 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lives--;
+        lives--;
 
-        Debug.Log("Lives remaining: " + _lives);
+        Debug.Log("Lives remaining: " + lives);
 
-        if (_lives < 1) {
+        if (lives < 1) {
+            _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
     }
-
+    
     void FireLaser()
     {
-        // Could also make a child laerSpawn object to player
+        // Could also make a child laserSpawn object to player
         // position laserSpawn object in front of player
         // use the transform.position of laserSpawn
         Vector3 laserSpawn = new Vector3(transform.position.x, transform.position.y + 0.8f, 0);
@@ -70,6 +76,7 @@ public class Player : MonoBehaviour
         _canFire = Time.time + _fireRate;
         Instantiate(_laserPrefab, laserSpawn, Quaternion.identity);
     }
+
     void PlayerMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -86,6 +93,7 @@ public class Player : MonoBehaviour
             0.0f
         );
     }
+
     void PlayerBounds()
     {
         float yPosition = transform.position.y;
