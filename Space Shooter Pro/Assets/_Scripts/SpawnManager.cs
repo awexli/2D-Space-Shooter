@@ -13,20 +13,12 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        _enemy =  _enemyPrefab.GetComponent<Enemy>();
+        _enemy = _enemyPrefab.GetComponent<Enemy>();
 
         if (_enemy == null)
-        {
             Debug.LogError("Enemy reference is null");
-        }
 
         StartCoroutine(SpawnRoutine());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     
     IEnumerator SpawnRoutine()
