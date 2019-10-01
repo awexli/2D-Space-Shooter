@@ -10,42 +10,51 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyContainer;
     [SerializeField]
     private GameObject _tripleShotPowerupPrefab;
+    [SerializeField]
+    private GameObject _powerUpContainer;
     private Enemy _enemy;
-    private bool playerDeath = false;
+    private bool _stopSpawning = false;
 
     void Start()
     {
         _enemy = _enemyPrefab.GetComponent<Enemy>();
 
         if (_enemy == null)
-            Debug.LogError("Enemy reference is null");
+            Debug.LogError("Enemy prefab is null");
 
-        StartCoroutine(SpawnRoutine());
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnPowerupRoutine());
     }
 
     public Vector3 RandomizeSpawn()
     {
         float randomX = Random.Range(Boundaries.spawnXMin, Boundaries.spawnXMax);
         Vector3 randomSpawn = new Vector3(randomX, Boundaries.spawnYMax, 0);
-
         return transform.position = randomSpawn;
     }
-    
-    IEnumerator SpawnRoutine()
+
+    IEnumerator SpawnEnemyRoutine()
     {
-        while (!playerDeath)
+        while (!_stopSpawning)
         {
-            GameObject newEnemy = Instantiate (_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
-            //GameObject newTripleShotPowerup = Instantiate (_tripleShotPowerupPrefab, RandomizeSpawn(), Quaternion.identity);
-
+            GameObject newEnemy = Instantiate(_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
 
-            yield return new WaitForSeconds(2.0f);
+    IEnumerator SpawnPowerupRoutine()
+    {
+        while (!_stopSpawning)
+        {
+            yield return new WaitForSeconds(Random.Range(3, 8));
+            GameObject newTriple = Instantiate(_tripleShotPowerupPrefab, RandomizeSpawn(), Quaternion.identity);
+            newTriple.transform.parent = _powerUpContainer.transform;
         }
     }
 
     public void OnPlayerDeath()
     {
-        playerDeath = true;
+        _stopSpawning = true;
     }
 }

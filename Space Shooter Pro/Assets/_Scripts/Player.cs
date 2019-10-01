@@ -20,11 +20,12 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _laserSpawn = GameObject.Find("Laser Spawn").GetComponent<LaserSpawn>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
+            
         if (_laserSpawn == null)
             Debug.LogError("Laser Spawn reference is null");
     }
