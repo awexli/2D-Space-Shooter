@@ -2,22 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boundaries : MonoBehaviour
+[System.Serializable]
+public static class Boundaries
 {
-    private Vector2 screenBounds;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Vector3 screenDimensions = new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z);
-        screenBounds = Camera.main.ScreenToWorldPoint(screenDimensions);
-    }
-
-    // Update is called once per frame
-    void LateUpdate()
-    {
-        Vector3 viewPosition = transform.position;
-        // clamp (players x position, min, max)
-        viewPosition.x = Mathf.Clamp(viewPosition.x, screenBounds.x, screenBounds.x * -1);
-        viewPosition.y = Mathf.Clamp(viewPosition.y, screenBounds.y, screenBounds.y * -1);
-    }
+    public static float playerYMax = 0f;
+    public static float playerYMin = -4.8f;
+    public static float playerXMax = 11.3f;
+    public static float playerXMin = -11.3f;
+    public static float spawnXMin = -9f;
+    public static float spawnXMax = 9f;
+    public static float spawnYMax = 7.5f;
+    public static float spawnYMin = -7.5f;
 }

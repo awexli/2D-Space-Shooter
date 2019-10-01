@@ -31,4 +31,16 @@ public class LaserSpawn : MonoBehaviour
 
         newLaser.transform.parent = _laserContainer.transform;
     }
+
+    IEnumerator PowerDownTripleShot()
+    {
+        yield return new WaitForSeconds(3.5f);
+        isTripleShotActive = false;
+    }
+
+    public void TripleShotActive()
+    {
+        isTripleShotActive = true;
+        StartCoroutine(PowerDownTripleShot());
+    }
 }

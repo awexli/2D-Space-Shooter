@@ -8,6 +8,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyPrefab;
     [SerializeField]
     private GameObject _enemyContainer;
+    [SerializeField]
+    private GameObject _tripleShotPowerupPrefab;
     private Enemy _enemy;
     private bool playerDeath = false;
 
@@ -20,12 +22,21 @@ public class SpawnManager : MonoBehaviour
 
         StartCoroutine(SpawnRoutine());
     }
+
+    public Vector3 RandomizeSpawn()
+    {
+        float randomX = Random.Range(Boundaries.spawnXMin, Boundaries.spawnXMax);
+        Vector3 randomSpawn = new Vector3(randomX, Boundaries.spawnYMax, 0);
+
+        return transform.position = randomSpawn;
+    }
     
     IEnumerator SpawnRoutine()
     {
         while (!playerDeath)
         {
-            GameObject newEnemy = Instantiate (_enemyPrefab, _enemy.RandomizeSpawn(), Quaternion.identity);
+            GameObject newEnemy = Instantiate (_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
+            //GameObject newTripleShotPowerup = Instantiate (_tripleShotPowerupPrefab, RandomizeSpawn(), Quaternion.identity);
 
             newEnemy.transform.parent = _enemyContainer.transform;
 

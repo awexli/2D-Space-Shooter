@@ -2,20 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// woooooooooooooooooooo
-[System.Serializable]
-public class Boundary
-{
-    // yMax = 0f
-    // yMin = 3.8f
-    // xMax = 11.3f
-    // xMin = -11.3f
-    public float yMax, yMin, xMax, xMin;
-}
-
 public class Player : MonoBehaviour
 {
-    public Boundary boundary;
+    [SerializeField]
     private SpawnManager _spawnManager;
     private LaserSpawn _laserSpawn;
     [SerializeField]
@@ -42,12 +31,10 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
             FireLaser();
         }
-
     }
 
     void FixedUpdate()
@@ -102,14 +89,14 @@ public class Player : MonoBehaviour
         transform.position = new Vector3
         (
             xPosition,
-            Mathf.Clamp(yPosition, boundary.yMin, boundary.yMax),
+            Mathf.Clamp(yPosition, Boundaries.playerYMin, Boundaries.playerYMax),
             0
         );
 
         // Loop x boundaries
-        if (xPosition >= boundary.xMax)
-            transform.position = new Vector3(boundary.xMin, yPosition, 0);
-        else if (xPosition <= boundary.xMin)
-            transform.position = new Vector3(boundary.xMax, yPosition, 0);
+        if (xPosition >= Boundaries.playerXMax)
+            transform.position = new Vector3(Boundaries.playerXMin, yPosition, 0);
+        else if (xPosition <= Boundaries.playerXMin)
+            transform.position = new Vector3(Boundaries.playerXMax, yPosition, 0);
     }
 }
