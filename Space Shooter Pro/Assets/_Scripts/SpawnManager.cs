@@ -7,11 +7,9 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
-    private GameObject _enemyContainer;
+    private GameObject[] _powerupPrefabs;
     [SerializeField]
-    private GameObject _tripleShotPowerupPrefab;
-    [SerializeField]
-    private GameObject _powerUpContainer;
+    private GameObject[] _containerObjects;
     private Enemy _enemy;
     private bool _stopSpawning = false;
 
@@ -38,7 +36,7 @@ public class SpawnManager : MonoBehaviour
         while (!_stopSpawning)
         {
             GameObject newEnemy = Instantiate(_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
-            newEnemy.transform.parent = _enemyContainer.transform;
+            newEnemy.transform.parent = _containerObjects[0].transform;
             yield return new WaitForSeconds(1.0f);
         }
     }
@@ -48,8 +46,9 @@ public class SpawnManager : MonoBehaviour
         while (!_stopSpawning)
         {
             yield return new WaitForSeconds(Random.Range(3, 8));
-            GameObject newTriple = Instantiate(_tripleShotPowerupPrefab, RandomizeSpawn(), Quaternion.identity);
-            newTriple.transform.parent = _powerUpContainer.transform;
+            int randomPowerup = Random.Range(0, 2);
+            GameObject newPowerUp = Instantiate(_powerupPrefabs[randomPowerup], RandomizeSpawn(), Quaternion.identity);
+            newPowerUp.transform.parent = _containerObjects[1].transform;
         }
     }
 

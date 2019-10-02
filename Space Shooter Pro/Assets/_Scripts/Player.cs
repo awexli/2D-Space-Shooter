@@ -8,24 +8,30 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private LaserSpawn _laserSpawn;
     [SerializeField]
-    private float _speed = 9.5f;
+    private float _speed;
+    private float _speedBoostMultiplier;
     [SerializeField]
-    private float _fireRate = 0.15f;
-    private float _canFire = -1f;
+    private float _fireRate;
+    private float _canFire;
     [SerializeField]
     private float tilt;
     [SerializeField]
-    private int lives = 3;
-
+    private int _lives;
 
     void Start()
     {
+        _speed = 9.5f;
+        _fireRate = 0.15f;
+        _canFire = -1f;
+        _lives = 3;
+        _speedBoostMultiplier = 2;
+
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _laserSpawn = GameObject.Find("Laser Spawn").GetComponent<LaserSpawn>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
-            
+
         if (_laserSpawn == null)
             Debug.LogError("Laser Spawn reference is null");
     }
@@ -44,13 +50,25 @@ public class Player : MonoBehaviour
         PlayerBounds();
     }
 
+    IEnumerator PowerDownSpeed()
+    {
+        yield return new WaitForSeconds(4.5f);
+        _speed /= _speedBoostMultiplier;
+    }
+
+    public void SpeedPowerupActive()
+    {
+        _speed *= _speedBoostMultiplier;
+        StartCoroutine(PowerDownSpeed());
+    }
+
     public void Damage()
     {
-        lives--;
+        _lives--;
 
-        Debug.Log("Lives remaining: " + lives);
+        Debug.Log("Lives remaining: " + _lives);
 
-        if (lives < 1)
+        if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);

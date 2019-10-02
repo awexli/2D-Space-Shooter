@@ -143,10 +143,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 462333123687544422, guid: d8ce14326ea3c2b4ba5b3e2360b900ed,
     type: 3}
-  _enemyContainer: {fileID: 1075596226}
-  _tripleShotPowerupPrefab: {fileID: 6827031267766054993, guid: b3a2241367a9434488ffa7878dbb60b4,
-    type: 3}
-  _powerUpContainer: {fileID: 1974343226}
+  _powerupPrefabs:
+  - {fileID: 6827031267766054993, guid: b3a2241367a9434488ffa7878dbb60b4, type: 3}
+  - {fileID: 6369243184693869092, guid: d76156fab571552469c6e18ce2e26f99, type: 3}
+  _containerObjects:
+  - {fileID: 1075596226}
+  - {fileID: 1974343226}
 --- !u!4 &324749800
 Transform:
   m_ObjectHideFlags: 0
@@ -271,7 +273,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1179472844
 GameObject:
@@ -308,7 +310,7 @@ MonoBehaviour:
   _speed: 9.5
   _fireRate: 0.15
   tilt: 10
-  lives: 3
+  _lives: 0
 --- !u!212 &1179472846
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -475,7 +477,7 @@ Transform:
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1894154658
 GameObject:
@@ -574,7 +576,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1999650982
 GameObject:
