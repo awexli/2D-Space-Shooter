@@ -13,4 +13,5 @@ public static class Boundaries
     public static float spawnXMax = 9f;
     public static float spawnYMax = 7.5f;
     public static float spawnYMin = -7.5f;
+    public static float laserBound = 5.8f;
 }

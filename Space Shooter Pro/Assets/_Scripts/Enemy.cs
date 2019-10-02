@@ -40,6 +40,7 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             _player.Damage();
+            _uiManager.UpdateLives();
             Destroy(this.gameObject);
         }
 
