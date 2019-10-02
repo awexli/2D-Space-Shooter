@@ -142,3 +142,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpeed: 4
+  _uiManager: {fileID: 615876486045213075, guid: 0472a8deeff5ec343988a84c616b7734,
+    type: 3}

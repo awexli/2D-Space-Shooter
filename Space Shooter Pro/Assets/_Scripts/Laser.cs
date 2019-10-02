@@ -7,7 +7,7 @@ public class Laser : MonoBehaviour
     [SerializeField]
     private float _speed = 10.5f;
     [SerializeField]
-    private float _upperBound = 8f;
+    private float _upperBound = 5.8f;
     
     void Update()
     {
