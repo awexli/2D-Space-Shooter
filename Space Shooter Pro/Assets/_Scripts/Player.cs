@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     private LaserSpawn _laserSpawn;
     [SerializeField]
     private float _speed;
-    private float _speedBoostMultiplier;
     [SerializeField]
     private float _fireRate;
     private float _canFire;
@@ -17,9 +16,11 @@ public class Player : MonoBehaviour
     private float tilt;
     [SerializeField]
     private int _lives;
-    [SerializeField]
+    //[SerializeField]
     //private Powerup _powerup;
     private bool _isShieldActive = false;
+    [SerializeField]
+    private GameObject _shieldVisualizer;
 
     void Start()
     {
@@ -27,7 +28,6 @@ public class Player : MonoBehaviour
         _fireRate = 0.15f;
         _canFire = -1f;
         _lives = 3;
-        _speedBoostMultiplier = 2;
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _laserSpawn = GameObject.Find("Laser Spawn").GetComponent<LaserSpawn>();
@@ -57,17 +57,18 @@ public class Player : MonoBehaviour
     public void ShieldPowerupActive()
     {
         _isShieldActive = true;
+        _shieldVisualizer.SetActive(true);
     }
 
     IEnumerator PowerDownSpeed()
     {
         yield return new WaitForSeconds(4.5f);
-        _speed /= _speedBoostMultiplier;
+        _speed = 9.5f;
     }
 
     public void SpeedPowerupActive()
     {
-        _speed *= _speedBoostMultiplier;
+        _speed = 11.5f;
         StartCoroutine(PowerDownSpeed());
     }
 
@@ -75,6 +76,7 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
+            _shieldVisualizer.SetActive(false);
             _isShieldActive = false;
             return;
         }
