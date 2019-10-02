@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     private float tilt;
     [SerializeField]
     private int _lives;
+    [SerializeField]
+    //private Powerup _powerup;
+    private bool _isShieldActive = false;
 
     void Start()
     {
@@ -28,6 +31,7 @@ public class Player : MonoBehaviour
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _laserSpawn = GameObject.Find("Laser Spawn").GetComponent<LaserSpawn>();
+        //_powerup = GetComponent<Powerup>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
@@ -50,6 +54,11 @@ public class Player : MonoBehaviour
         PlayerBounds();
     }
 
+    public void ShieldPowerupActive()
+    {
+        _isShieldActive = true;
+    }
+
     IEnumerator PowerDownSpeed()
     {
         yield return new WaitForSeconds(4.5f);
@@ -64,14 +73,22 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lives--;
-
-        Debug.Log("Lives remaining: " + _lives);
-
-        if (_lives < 1)
+        if (_isShieldActive == true)
         {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            _isShieldActive = false;
+            return;
+        }
+        else
+        {
+            _lives--;
+
+            Debug.Log("Lives remaining: " + _lives);
+
+            if (_lives < 1)
+            {
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject);
+            }
         }
     }
 

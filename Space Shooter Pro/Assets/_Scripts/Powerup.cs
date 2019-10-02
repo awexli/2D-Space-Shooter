@@ -35,11 +35,14 @@ public class Powerup : MonoBehaviour
             switch (powerUPID)
             {
                 case 0:
-                // prob move tripleshotactive to player class
+                    // prob move tripleshotactive to player class
                     _laserSpawn.TripleShotActive();
                     break;
                 case 1:
                     _player.SpeedPowerupActive();
+                    break;
+                case 2:
+                    _player.ShieldPowerupActive();
                     break;
                 default:
                     break;

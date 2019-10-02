@@ -35,8 +35,11 @@ public class SpawnManager : MonoBehaviour
     {
         while (!_stopSpawning)
         {
-            GameObject newEnemy = Instantiate(_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
+            GameObject newEnemy = 
+                Instantiate(_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
+
             newEnemy.transform.parent = _containerObjects[0].transform;
+            
             yield return new WaitForSeconds(1.0f);
         }
     }
@@ -45,9 +48,13 @@ public class SpawnManager : MonoBehaviour
     {
         while (!_stopSpawning)
         {
-            yield return new WaitForSeconds(Random.Range(3, 8));
-            int randomPowerup = Random.Range(0, 2);
-            GameObject newPowerUp = Instantiate(_powerupPrefabs[randomPowerup], RandomizeSpawn(), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(2, 8));
+
+            int randomPowerup = Random.Range(0, 3);
+
+            GameObject newPowerUp = 
+                Instantiate(_powerupPrefabs[randomPowerup], RandomizeSpawn(), Quaternion.identity);
+
             newPowerUp.transform.parent = _containerObjects[1].transform;
         }
     }

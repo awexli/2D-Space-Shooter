@@ -146,6 +146,7 @@ MonoBehaviour:
   _powerupPrefabs:
   - {fileID: 6827031267766054993, guid: b3a2241367a9434488ffa7878dbb60b4, type: 3}
   - {fileID: 6369243184693869092, guid: d76156fab571552469c6e18ce2e26f99, type: 3}
+  - {fileID: 6945639866256241254, guid: 2235e56623f7c7a44b16f40b14000817, type: 3}
   _containerObjects:
   - {fileID: 1075596226}
   - {fileID: 1974343226}
