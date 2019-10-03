@@ -6,6 +6,7 @@
 - bug: when killing enemy, enemy stops, but still detects collision for 2.5f seconds. Meaning player can still take damage multiple times if running into stopped enemy.
 >> fixed  
 - visual bug: enemy spawning on top of destroyed enemy will cause flicker  
+- bug: audio fighting to play over each other due to singe audiomanager
 
 ## Come back later  
 - when enemy collides with shield, animation does not play  
