@@ -18,9 +18,9 @@ m_Collider.enabled = false;
 Destroy(other.gameObject);
 Destroy(this.gameObject, 0.2f);
 ```
-
+- enemy death using asteroid animation for now
 
 ## To be improved on  
 - hard coded boundaries  
 - no use of inheritance  
-- UIManager not using _lives of player class  
+- UIManager not using _lives of player class 

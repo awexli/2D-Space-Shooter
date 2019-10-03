@@ -28,8 +28,6 @@ public class Player : MonoBehaviour
         _lives = 3;
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        
-        
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");

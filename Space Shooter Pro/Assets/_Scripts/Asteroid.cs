@@ -15,6 +15,7 @@ public class Asteroid : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_Collider = GetComponent<Collider2D>();
         _spawnManger = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        
         if (_spawnManger == null)
             Debug.Log("Spawn Manager reference is NULL");
     }

@@ -80,9 +80,9 @@ public class Enemy : MonoBehaviour
     
     void EnemyDeathProtocol()
     {
-        m_Animator.SetTrigger("OnEnemyDeath");
+        m_Animator.SetTrigger("OnAsteroidDeath");
         enemySpeed = 0;
         m_collider.enabled = false;
-        Destroy(this.gameObject, 2.2f);
+        Destroy(this.gameObject, 2f);
     }
 }
