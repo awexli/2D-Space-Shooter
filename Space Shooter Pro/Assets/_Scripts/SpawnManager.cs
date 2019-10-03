@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
-{ 
+{
 
     [SerializeField]
     private GameObject _enemyPrefab = null;
@@ -23,10 +23,12 @@ public class SpawnManager : MonoBehaviour
     {
         _enemy = _enemyPrefab.GetComponent<Enemy>();
 
-
         if (_enemy == null)
             Debug.LogError("Enemy prefab is null");
+    }
 
+    public void StartSpawning()
+    {
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
     }
@@ -38,14 +40,43 @@ public class SpawnManager : MonoBehaviour
         return transform.position = randomSpawn;
     }
 
+    IEnumerator SpawnEnemyRoutine()
+    {
+        while (!_stopSpawning)
+        {
+            GameObject newEnemy =
+                Instantiate(_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
+
+            newEnemy.transform.parent = _containerObjects[1].transform;
+
+            yield return new WaitForSeconds(1.5f);
+        }
+    }
+
+    IEnumerator SpawnPowerupRoutine()
+    {
+        yield return new WaitForSeconds(3f);
+        while (!_stopSpawning)
+        {
+            int randomPowerup = Random.Range(0, 3);
+
+            GameObject newPowerUp =
+                Instantiate(_powerupPrefabs[randomPowerup], RandomizeSpawn(), Quaternion.identity);
+
+            newPowerUp.transform.parent = _containerObjects[2].transform;
+
+            yield return new WaitForSeconds(Random.Range(3, 8));
+        }
+    }
+
     #region LaserSpawns
     public void SpawnLaser()
     {
-        
-        Vector3 spawnPosition = new Vector3 
+
+        Vector3 spawnPosition = new Vector3
         (
-            _laserSpawnPosition.transform.position.x, 
-            _laserSpawnPosition.transform.position.y, 
+            _laserSpawnPosition.transform.position.x,
+            _laserSpawnPosition.transform.position.y,
             0
         );
 
@@ -71,36 +102,6 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(PowerDownTripleShot());
     }
     #endregion
-
-    IEnumerator SpawnEnemyRoutine()
-    {
-        while (!_stopSpawning)
-        {
-            GameObject newEnemy = 
-                Instantiate(_enemyPrefab, RandomizeSpawn(), Quaternion.identity);
-
-            newEnemy.transform.parent = _containerObjects[1].transform;
-            
-            yield return new WaitForSeconds(1.5f);
-        }
-    }
-
-    IEnumerator SpawnPowerupRoutine()
-    {
-        while (!_stopSpawning)
-        {
-            yield return new WaitForSecondsRealtime(3);
-            
-            int randomPowerup = Random.Range(0, 3);
-
-            GameObject newPowerUp = 
-                Instantiate(_powerupPrefabs[randomPowerup], RandomizeSpawn(), Quaternion.identity);
-
-            newPowerUp.transform.parent = _containerObjects[2].transform;
-
-            yield return new WaitForSeconds(Random.Range(2, 8));
-        }
-    }
 
     public void OnPlayerDeath()
     {
