@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private UIManager _uiManager;
     Animator m_Animator;
+    Collider2D m_collider;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         m_Animator = GetComponent<Animator>();
+        m_collider = GetComponent<Collider2D>();
 
         if (_spawnManager == null)
             Debug.Log("Spawn Manager object is null");
@@ -45,27 +47,44 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
-        {
-            _player.Damage();
-            _uiManager.UpdateLives();
-            m_Animator.SetTrigger("OnEnemyDeath");
-            enemySpeed = 0;
-            Destroy(this.gameObject, 2.2f);
-        }
+            OnPlayerCollsion();
 
         if (other.gameObject.tag == "Shield")
-        {
-            Destroy(this.gameObject);
-            _player.ShieldPowerupDeactivate();
-        }
+            OnShieldCollision();
 
         if (other.gameObject.tag == "Laser")
         {
-            _uiManager.UpdateScore();
-            m_Animator.SetTrigger("OnEnemyDeath");
+            OnLaserCollision();
             Destroy(other.gameObject);
-            enemySpeed = 0;
-            Destroy(this.gameObject, 2.2f);
         }
+    }
+
+    void OnShieldCollision()
+    {
+        _player.ShieldPowerupDeactivate();
+        EnemyDeathProtocol();
+        Destroy(this.gameObject);
+    }
+
+    void OnPlayerCollsion()
+    {
+        _player.Damage();
+        _uiManager.UpdateLives();
+        EnemyDeathProtocol();
+        Destroy(this.gameObject, 2.2f);
+    }
+
+    void OnLaserCollision()
+    {
+        _uiManager.UpdateScore();
+        EnemyDeathProtocol();
+        Destroy(this.gameObject, 2.2f);
+    }
+    
+    void EnemyDeathProtocol()
+    {
+        m_Animator.SetTrigger("OnEnemyDeath");
+        enemySpeed = 0;
+        m_collider.enabled = false;
     }
 }
