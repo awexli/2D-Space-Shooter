@@ -10,12 +10,14 @@ public class Enemy : MonoBehaviour
     public float enemySpeed;
     [SerializeField]
     private UIManager _uiManager;
+    Animator m_Animator;
 
     void Start()
     {
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        m_Animator = GetComponent<Animator>();
 
         if (_spawnManager == null)
             Debug.Log("Spawn Manager object is null");
@@ -44,9 +46,11 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Destroy(this.gameObject);
             _player.Damage();
             _uiManager.UpdateLives();
+            m_Animator.SetTrigger("OnEnemyDeath");
+            enemySpeed = 0;
+            Destroy(this.gameObject, 2.2f);
         }
 
         if (other.gameObject.tag == "Shield")
@@ -57,9 +61,11 @@ public class Enemy : MonoBehaviour
 
         if (other.gameObject.tag == "Laser")
         {
-            Destroy(other.gameObject);
             _uiManager.UpdateScore();
-            Destroy(this.gameObject);
+            m_Animator.SetTrigger("OnEnemyDeath");
+            Destroy(other.gameObject);
+            enemySpeed = 0;
+            Destroy(this.gameObject, 2.2f);
         }
     }
 }
