@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private SpawnManager _spawnManager;
-    private LaserSpawn _laserSpawn;
     [SerializeField]
     private float _speed;
     [SerializeField]
@@ -15,11 +14,9 @@ public class Player : MonoBehaviour
     private float tilt;
     [SerializeField]
     private int _lives;
-    //[SerializeField]
-    //private Powerup _powerup;
     private bool _isShieldActive = false;
     [SerializeField]
-    private GameObject _shieldVisualizer;
+    private GameObject _shieldVisualizer = null;
 
     void Start()
     {
@@ -29,14 +26,9 @@ public class Player : MonoBehaviour
         _lives = 3;
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        _laserSpawn = GameObject.Find("Laser Spawn").GetComponent<LaserSpawn>();
-        //_powerup = GetComponent<Powerup>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
-
-        if (_laserSpawn == null)
-            Debug.LogError("Laser Spawn reference is null");
     }
 
     void Update()
@@ -59,6 +51,12 @@ public class Player : MonoBehaviour
         _shieldVisualizer.SetActive(true);
     }
 
+    public void ShieldPowerupDeactivate()
+    {
+        _isShieldActive = false;
+        _shieldVisualizer.SetActive(false);
+    }
+
     IEnumerator PowerDownSpeed()
     {
         yield return new WaitForSeconds(4.5f);
@@ -75,8 +73,7 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive == true)
         {
-            _shieldVisualizer.SetActive(false);
-            _isShieldActive = false;
+            ShieldPowerupDeactivate();
             return;
         }
         else
@@ -96,7 +93,7 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
-        _laserSpawn.SpawnLaser();
+        _spawnManager.SpawnLaser();
     }
 
     void PlayerMovement()
@@ -136,4 +133,10 @@ public class Player : MonoBehaviour
         else if (xPosition <= Boundaries.playerXMin)
             transform.position = new Vector3(Boundaries.playerXMax, yPosition, 0);
     }
+
+    public int GetLives()
+    {
+        return this._lives;
+    }
+
 }

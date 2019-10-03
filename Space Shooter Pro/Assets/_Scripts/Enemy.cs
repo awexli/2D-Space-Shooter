@@ -19,15 +19,20 @@ public class Enemy : MonoBehaviour
 
         if (_spawnManager == null)
             Debug.Log("Spawn Manager object is null");
-            
-        if(_player == null)
+
+        if (_player == null)
             Debug.Log("Player tag is null");
 
-        if(_uiManager == null)
+        if (_uiManager == null)
             Debug.Log("UIManager is null");
     }
 
     void Update()
+    {
+        MoveDown();
+    }
+
+    private void MoveDown()
     {
         transform.Translate(Vector3.down * enemySpeed * Time.deltaTime);
 
@@ -39,9 +44,15 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            Destroy(this.gameObject);
             _player.Damage();
             _uiManager.UpdateLives();
+        }
+
+        if (other.gameObject.tag == "Shield")
+        {
             Destroy(this.gameObject);
+            _player.ShieldPowerupDeactivate();
         }
 
         if (other.gameObject.tag == "Laser")

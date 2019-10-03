@@ -6,21 +6,26 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed;
-    private LaserSpawn _laserSpawn;
+    private SpawnManager _spawnManager;
     private Player _player;
     [SerializeField]
     private int powerUPID;
 
     void Start()
     {
-        _laserSpawn = GameObject.Find("Laser Spawn").GetComponent<LaserSpawn>();
+        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 
-        if (_laserSpawn == null)
-            Debug.Log("Laser Spawn reference is NULL");
+        if (_spawnManager == null)
+            Debug.Log("_spawnManager reference is NULL");
     }
 
     void Update()
+    {
+        MoveDown();
+    }
+
+    private void MoveDown()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
@@ -36,7 +41,7 @@ public class Powerup : MonoBehaviour
             {
                 case 0:
                     // prob move tripleshotactive to player class
-                    _laserSpawn.TripleShotActive();
+                    _spawnManager.TripleShotActive();
                     break;
                 case 1:
                     _player.SpeedPowerupActive();

@@ -143,13 +143,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 462333123687544422, guid: d8ce14326ea3c2b4ba5b3e2360b900ed,
     type: 3}
+  _laserPrefabs:
+  - {fileID: 7112946916462195454, guid: d991f078b990f1947a9b2f0e7a15cc80, type: 3}
+  - {fileID: 2208407373394767837, guid: 068f8492d331a6c498bc415b5b84e28c, type: 3}
   _powerupPrefabs:
   - {fileID: 6827031267766054993, guid: b3a2241367a9434488ffa7878dbb60b4, type: 3}
   - {fileID: 6369243184693869092, guid: d76156fab571552469c6e18ce2e26f99, type: 3}
   - {fileID: 6945639866256241254, guid: 2235e56623f7c7a44b16f40b14000817, type: 3}
   _containerObjects:
+  - {fileID: 1724550977}
   - {fileID: 1075596226}
   - {fileID: 1974343226}
+  _laserSpawnPosition: {fileID: 1259283203}
 --- !u!4 &324749800
 Transform:
   m_ObjectHideFlags: 0
@@ -348,7 +353,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 605393923
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 1b4a8fdd39d3a45d0a9ee484ad6800ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -411,7 +416,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1259283203}
-  - component: {fileID: 1259283204}
   m_Layer: 0
   m_Name: Laser Spawn
   m_TagString: Untagged
@@ -433,24 +437,6 @@ Transform:
   m_Father: {fileID: 1179472847}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1259283204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259283202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d3d1a92349ae1f43867880962f6d07a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _laserContainer: {fileID: 1724550977}
-  _laserPrefab: {fileID: 7112946916462195454, guid: d991f078b990f1947a9b2f0e7a15cc80,
-    type: 3}
-  _triplePrefab: {fileID: 2208407373394767837, guid: 068f8492d331a6c498bc415b5b84e28c,
-    type: 3}
-  isTripleShotActive: 0
 --- !u!1 &1270364141 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9182470319346595003, guid: e4676cbf5938e754c9154e6494d3eeb3,
@@ -854,10 +840,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1400859664, guid: 0472a8deeff5ec343988a84c616b7734, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0472a8deeff5ec343988a84c616b7734, type: 3}
 --- !u!1001 &4281871835884490120
@@ -925,6 +907,11 @@ PrefabInstance:
     - target: {fileID: 9182470319346594998, guid: e4676cbf5938e754c9154e6494d3eeb3,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182470319346594997, guid: e4676cbf5938e754c9154e6494d3eeb3,
+        type: 3}
+      propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
