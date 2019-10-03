@@ -12,12 +12,13 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _livesImage = null;
     [SerializeField]
-    private Sprite[] _liveSprites;
+    private Sprite[] _liveSprites = null;
     private int _currentLives;
     [SerializeField]
-    private Text _gameOverText;
+    private Text _gameOverText = null;
     [SerializeField]
-    private Text _restartText;
+    private Text _restartText = null;
+    private GameManager _gameManager;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,10 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: " + _score;
         _gameOverText.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+
+        _gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        if (_gameManager == null)
+            Debug.Log("Game Manager not found in the hierarchy");
     }
 
     public void UpdateScore()
@@ -42,12 +47,18 @@ public class UIManager : MonoBehaviour
 
         if (_currentLives < 1)
         {
-            _gameOverText.gameObject.SetActive(true);
-            _restartText.gameObject.SetActive(true);
-            StartCoroutine(GameOverFlicker());
+            GameOverSequence();
         }
     }
-    
+
+    void GameOverSequence()
+    {
+        _gameOverText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+        _gameManager.GameOver();
+        StartCoroutine(GameOverFlicker());
+    }
+
     IEnumerator GameOverFlicker()
     {
         while (_currentLives < 1)

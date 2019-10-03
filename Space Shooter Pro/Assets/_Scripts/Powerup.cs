@@ -6,8 +6,8 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed;
-    private SpawnManager _spawnManager;
     private Player _player;
+    private SpawnManager _spawnManager;
     [SerializeField]
     private int powerUPID;
 

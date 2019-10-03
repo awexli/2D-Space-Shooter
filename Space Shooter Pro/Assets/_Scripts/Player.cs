@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     private float _fireRate;
     private float _canFire;
     [SerializeField]
-    private float tilt;
+    private float tilt = 0;
     [SerializeField]
     private int _lives;
     private bool _isShieldActive = false;
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
             if (_lives < 1)
             {
                 _spawnManager.OnPlayerDeath();
-                Destroy(this.gameObject);
+                this.gameObject.SetActive(false);
             }
         }
     }

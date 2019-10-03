@@ -6,15 +6,15 @@ public class SpawnManager : MonoBehaviour
 { 
 
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject _enemyPrefab = null;
     [SerializeField]
-    private GameObject[] _laserPrefabs;
+    private GameObject[] _laserPrefabs = null;
     [SerializeField]
-    private GameObject[] _powerupPrefabs;
+    private GameObject[] _powerupPrefabs = null;
     [SerializeField]
     private GameObject[] _containerObjects = null;
     [SerializeField]
-    private Transform _laserSpawnPosition;
+    private Transform _laserSpawnPosition = null;
     private Enemy _enemy;
     private bool _stopSpawning = false;
     private bool isTripleShotActive = false;
@@ -89,14 +89,16 @@ public class SpawnManager : MonoBehaviour
     {
         while (!_stopSpawning)
         {
-            yield return new WaitForSeconds(Random.Range(2, 8));
-
+            yield return new WaitForSecondsRealtime(3);
+            
             int randomPowerup = Random.Range(0, 3);
 
             GameObject newPowerUp = 
                 Instantiate(_powerupPrefabs[randomPowerup], RandomizeSpawn(), Quaternion.identity);
 
             newPowerUp.transform.parent = _containerObjects[2].transform;
+
+            yield return new WaitForSeconds(Random.Range(2, 8));
         }
     }
 
