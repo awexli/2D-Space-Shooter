@@ -9,13 +9,15 @@ public class Asteroid : MonoBehaviour
     Animator m_Animator;
     Collider2D m_Collider;
     private SpawnManager _spawnManger;
+    private AudioManager _audioSource;
 
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         m_Collider = GetComponent<Collider2D>();
         _spawnManger = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        
+        _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
+
         if (_spawnManger == null)
             Debug.Log("Spawn Manager reference is NULL");
     }
@@ -30,10 +32,11 @@ public class Asteroid : MonoBehaviour
     {
         if (other.gameObject.tag == "Laser")
         {
+            _audioSource.PlayExplosion();
             m_Animator.SetTrigger("OnAsteroidDeath");
             m_Collider.enabled = false;
-            Destroy(other.gameObject);
             _spawnManger.StartSpawning();
+            Destroy(other.gameObject);
             Destroy(this.gameObject, 2f);
         }
     }

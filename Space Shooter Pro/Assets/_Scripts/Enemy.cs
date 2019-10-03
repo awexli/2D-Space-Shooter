@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour
     private UIManager _uiManager;
     Animator m_Animator;
     Collider2D m_collider;
+    private AudioManager _audioSource;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         m_Animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider2D>();
+        _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
         if (_spawnManager == null)
             Debug.Log("Spawn Manager object is null");
@@ -83,6 +85,7 @@ public class Enemy : MonoBehaviour
         m_Animator.SetTrigger("OnAsteroidDeath");
         enemySpeed = 0;
         m_collider.enabled = false;
+        _audioSource.PlayExplosion();
         Destroy(this.gameObject, 2f);
     }
 }

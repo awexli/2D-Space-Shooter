@@ -10,11 +10,13 @@ public class Powerup : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField]
     private int powerUPID = 0;
+    private AudioManager _audioSource;
 
     void Start()
     {
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
         if (_spawnManager == null)
             Debug.Log("_spawnManager reference is NULL");
@@ -37,6 +39,7 @@ public class Powerup : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            _audioSource.PlayPowerup();
             switch (powerUPID)
             {
                 case 0:

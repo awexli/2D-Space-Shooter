@@ -23,4 +23,5 @@ Destroy(this.gameObject, 0.2f);
 ## To be improved on  
 - hard coded boundaries  
 - no use of inheritance  
-- UIManager not using _lives of player class 
+- UIManager not using _lives of player class  
+- Audiosource being referenced too many times
