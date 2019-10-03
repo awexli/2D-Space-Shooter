@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     [SerializeField]
     private GameObject _shieldVisualizer = null;
+    [SerializeField]
+    private GameObject[] _engines = null;
 
     void Start()
     {
@@ -26,6 +28,8 @@ public class Player : MonoBehaviour
         _lives = 3;
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
+        
+        
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
@@ -79,6 +83,12 @@ public class Player : MonoBehaviour
         else
         {
             _lives--;
+
+            if (_lives == 2)
+                _engines[0].SetActive(true);
+
+            if (_lives == 1)
+                _engines[1].SetActive(true);
 
             Debug.Log("Lives remaining: " + _lives);
 
