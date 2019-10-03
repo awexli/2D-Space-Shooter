@@ -11,7 +11,8 @@
 - when enemy collides with shield, animation does not play  
 - maybe make a public MoveDown()  
 - maybe switch statement for enemy OnTriggerEnter()  
-- ``` csharp
+- 
+``` csharp
 Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 m_Collider.enabled = false;
 Destroy(other.gameObject);
