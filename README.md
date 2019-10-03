@@ -11,7 +11,7 @@
 - when enemy collides with shield, animation does not play  
 - maybe make a public MoveDown()  
 - maybe switch statement for enemy OnTriggerEnter()  
-- 
+- Difference between creating an animation for a prefab vs creating an explosion prefab and instantiate it when object dies
 ``` csharp
 Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
 m_Collider.enabled = false;
