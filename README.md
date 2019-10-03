@@ -10,6 +10,14 @@
 ## Come back later  
 - when enemy collides with shield, animation does not play  
 - maybe make a public MoveDown()  
+- maybe switch statement for enemy OnTriggerEnter()  
+- ``` csharp
+Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+m_Collider.enabled = false;
+Destroy(other.gameObject);
+Destroy(this.gameObject, 0.2f);
+```
+
 
 ## To be improved on  
 - hard coded boundaries  

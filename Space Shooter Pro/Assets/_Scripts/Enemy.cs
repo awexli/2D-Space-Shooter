@@ -63,7 +63,6 @@ public class Enemy : MonoBehaviour
     {
         _player.ShieldPowerupDeactivate();
         EnemyDeathProtocol();
-        Destroy(this.gameObject);
     }
 
     void OnPlayerCollsion()
@@ -71,14 +70,12 @@ public class Enemy : MonoBehaviour
         _player.Damage();
         _uiManager.UpdateLives();
         EnemyDeathProtocol();
-        Destroy(this.gameObject, 2.2f);
     }
 
     void OnLaserCollision()
     {
         _uiManager.UpdateScore();
         EnemyDeathProtocol();
-        Destroy(this.gameObject, 2.2f);
     }
     
     void EnemyDeathProtocol()
@@ -86,5 +83,6 @@ public class Enemy : MonoBehaviour
         m_Animator.SetTrigger("OnEnemyDeath");
         enemySpeed = 0;
         m_collider.enabled = false;
+        Destroy(this.gameObject, 2.2f);
     }
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 public class Powerup : MonoBehaviour
 {
     [SerializeField]
-    private float _speed;
+    private float _speed = 0;
     private Player _player;
     private SpawnManager _spawnManager;
     [SerializeField]
-    private int powerUPID;
+    private int powerUPID = 0;
 
     void Start()
     {
