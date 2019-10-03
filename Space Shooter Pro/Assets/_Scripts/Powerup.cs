@@ -39,7 +39,7 @@ public class Powerup : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            _audioSource.PlayPowerup();
+            _audioSource.PlayAudio();
             switch (powerUPID)
             {
                 case 0:

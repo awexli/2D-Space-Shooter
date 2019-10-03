@@ -19,7 +19,7 @@ public class Player : MonoBehaviour
     private GameObject _shieldVisualizer = null;
     [SerializeField]
     private GameObject[] _engines = null;
-    private AudioManager _audioSource;
+    private AudioSource _laserShot;
 
     void Start()
     {
@@ -29,14 +29,13 @@ public class Player : MonoBehaviour
         _lives = 3;
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
+        _laserShot = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
 
-        if(_audioSource == null)
+        if(_laserShot == null)
             Debug.LogError("Audio source on the playeris NULL");
-
     }
 
     void Update()
@@ -107,7 +106,7 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
-        _audioSource.PlayLaserShot();
+        _laserShot.Play();
         _spawnManager.SpawnLaser();
     }
 

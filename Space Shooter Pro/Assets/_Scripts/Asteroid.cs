@@ -6,15 +6,13 @@ public class Asteroid : MonoBehaviour
 {
     [SerializeField]
     private float _rotateSpeed = 15.5f;
-    Animator m_Animator;
-    Collider2D m_Collider;
+    [SerializeField]
+    private GameObject _explosionPrefab;
     private SpawnManager _spawnManger;
     private AudioManager _audioSource;
 
     void Start()
     {
-        m_Animator = GetComponent<Animator>();
-        m_Collider = GetComponent<Collider2D>();
         _spawnManger = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
@@ -32,12 +30,11 @@ public class Asteroid : MonoBehaviour
     {
         if (other.gameObject.tag == "Laser")
         {
-            _audioSource.PlayExplosion();
-            m_Animator.SetTrigger("OnAsteroidDeath");
-            m_Collider.enabled = false;
+            //_audioSource.PlayExplosion();
+            Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _spawnManger.StartSpawning();
             Destroy(other.gameObject);
-            Destroy(this.gameObject, 2f);
+            Destroy(this.gameObject);
         }
     }
 }

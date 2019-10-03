@@ -10,18 +10,14 @@ public class Enemy : MonoBehaviour
     public float enemySpeed;
     [SerializeField]
     private UIManager _uiManager;
-    Animator m_Animator;
-    Collider2D m_collider;
-    private AudioManager _audioSource;
+    [SerializeField]
+    private GameObject _explosionPrefab = null;
 
     void Start()
     {
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
         _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        m_Animator = GetComponent<Animator>();
-        m_collider = GetComponent<Collider2D>();
-        _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
         if (_spawnManager == null)
             Debug.Log("Spawn Manager object is null");
@@ -82,10 +78,8 @@ public class Enemy : MonoBehaviour
     
     void EnemyDeathProtocol()
     {
-        m_Animator.SetTrigger("OnAsteroidDeath");
-        enemySpeed = 0;
-        m_collider.enabled = false;
-        _audioSource.PlayExplosion();
-        Destroy(this.gameObject, 2f);
+        // put this in a container later
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
     }
 }
