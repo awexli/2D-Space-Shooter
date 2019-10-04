@@ -16,7 +16,6 @@
 
 ## Come back later  
 - maybe make a public MoveDown()  
-- maybe switch statement for enemy OnTriggerEnter()  
 - Difference between creating an animation for a prefab vs creating an explosion prefab and instantiate it when object dies  
 ``` csharp
 Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
@@ -30,8 +29,10 @@ Destroy(this.gameObject, 0.2f);
 - Hard coded boundaries  
 - No use of inheritance  
 - UIManager not using _lives of player class  
+>> Now it does  
 - Audiosource being referenced too many times  
 - Audio for damaged player  
+>> using wow.wave  
 - Classes referencing each other from all over the place  
 - Hard coded shieldChildIndex  
 - Allow for unique powerup audio for each powerup (very crude method working right now)  
@@ -40,6 +41,8 @@ Destroy(this.gameObject, 0.2f);
 - Levels  
 - Different powerups  
 - Various audio  
-- "Moving Bacground"
+- "Moving Background"  
 - Better text 
-- Cooldown visual
+- Cooldown visual  
+- Thruster sounds  
+- 2 and 1 lives sound  

@@ -172,6 +172,11 @@ public class Player : MonoBehaviour
         return this._lives;
     }
 
+    public void SetLives(int lives)
+    {
+        this._lives = lives;
+    }
+
     public void SetSpeed(float newSpeed)
     {
         _speed = newSpeed;
