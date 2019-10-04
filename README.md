@@ -27,11 +27,12 @@ Destroy(this.gameObject, 0.2f);
 >> went with instantiating explosion prefab  
 
 ## To be improved on  
-- hard coded boundaries  
-- no use of inheritance  
+- Hard coded boundaries  
+- No use of inheritance  
 - UIManager not using _lives of player class  
 - Audiosource being referenced too many times  
-- audio for damaged player  
+- Audio for damaged player  
+- Classes referencing each other from all over the place
 
 ## To be added in the future  
 - Levels  
@@ -39,3 +40,4 @@ Destroy(this.gameObject, 0.2f);
 - Various audio  
 - Various visual 
 - Better text 
+- Cooldown visual

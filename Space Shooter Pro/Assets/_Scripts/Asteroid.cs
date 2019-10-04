@@ -7,7 +7,7 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private float _rotateSpeed = 15.5f;
     [SerializeField]
-    private GameObject _explosionPrefab;
+    private GameObject _explosionPrefab = null;
     private SpawnManager _spawnManger;
     private AudioManager _audioSource;
 

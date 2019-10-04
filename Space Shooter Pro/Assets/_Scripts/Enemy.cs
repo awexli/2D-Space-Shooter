@@ -8,10 +8,17 @@ public class Enemy : MonoBehaviour
     private SpawnManager _spawnManager;
     private Player _player;
     public float enemySpeed;
+    private float _fireRate = 3.0f;
+    private float _canFire = -1;
     [SerializeField]
     private UIManager _uiManager;
     [SerializeField]
     private GameObject _explosionPrefab = null;
+    [SerializeField]
+    private Transform _laserSpawn = null;
+    [SerializeField]
+    private GameObject _enemyLaserPrefab = null;
+    private bool _isDead = false;
 
     void Start()
     {
@@ -32,6 +39,13 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         MoveDown();
+        
+        if (Time.time > _canFire && !_isDead)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            SpawnLaser();
+        }
     }
 
     private void MoveDown()
@@ -41,8 +55,6 @@ public class Enemy : MonoBehaviour
         if (transform.position.y <= Boundaries.spawnYMin)
             transform.position = _spawnManager.RandomizeSpawn();
     }
-
-    
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -68,7 +80,6 @@ public class Enemy : MonoBehaviour
     void OnPlayerCollsion()
     {
         _player.Damage();
-        _uiManager.UpdateLives();
         EnemyDeathProtocol();
     }
 
@@ -82,6 +93,20 @@ public class Enemy : MonoBehaviour
     {
         // put this in a container later
         Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+        _isDead = true;
         Destroy(this.gameObject);
+    }
+
+    // can move this to SpawnManager.cs
+    private void SpawnLaser()
+    {
+        Vector3 spawnPos = new Vector3
+        (
+            _laserSpawn.transform.position.x,
+            _laserSpawn.transform.position.y,
+            0
+        );
+
+        Instantiate(_enemyLaserPrefab, spawnPos, Quaternion.identity);
     }
 }

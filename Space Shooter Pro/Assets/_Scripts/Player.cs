@@ -6,10 +6,10 @@ public class Player : MonoBehaviour
 {
     private SpawnManager _spawnManager;
     [SerializeField]
-    private float _speed;
+    private float _speed = 9.5f;
     [SerializeField]
-    private float _fireRate;
-    private float _canFire;
+    private float _fireRate = 0.15f;
+    private float _canFire = -1f;
     [SerializeField]
     private float tilt = 0;
     [SerializeField]
@@ -19,22 +19,24 @@ public class Player : MonoBehaviour
     private GameObject _shieldVisualizer = null;
     [SerializeField]
     private GameObject[] _engines = null;
-    private AudioSource _laserShot;
+    private AudioSource _laserShotClip = null;
+    private int _childCounter;
+    private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private UIManager _uiManager;
 
     void Start()
     {
-        _speed = 9.5f;
-        _fireRate = 0.15f;
-        _canFire = -1f;
         _lives = 3;
 
         _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        _laserShot = GetComponent<AudioSource>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _laserShotClip = GetComponent<AudioSource>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
 
-        if(_laserShot == null)
+        if(_laserShotClip == null)
             Debug.LogError("Audio source on the playeris NULL");
     }
 
@@ -78,6 +80,7 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        
         if (_isShieldActive == true)
         {
             ShieldPowerupDeactivate();
@@ -99,6 +102,8 @@ public class Player : MonoBehaviour
             {
                 _spawnManager.OnPlayerDeath();
                 this.gameObject.SetActive(false);
+                //_spriteRenderer.enabled = false;
+                //this.gameObject.GetComponent<Player>().enabled = false;
             }
         }
     }
@@ -106,7 +111,7 @@ public class Player : MonoBehaviour
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
-        _laserShot.Play();
+        _laserShotClip.Play();
         _spawnManager.SpawnLaser();
     }
 
@@ -151,6 +156,15 @@ public class Player : MonoBehaviour
     public int GetLives()
     {
         return this._lives;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Enemy Laser")
+        {
+            Damage();
+            _uiManager.UpdateLives();
+        }
     }
 
 }

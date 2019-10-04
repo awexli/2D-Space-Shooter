@@ -892,6 +892,7 @@ MonoBehaviour:
   _engines:
   - {fileID: 983457277}
   - {fileID: 1440711092}
+  _uiManager: {fileID: 0}
 --- !u!212 &1179472846
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -972,7 +973,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.033250213}
+  m_Offset: {x: 0, y: -0.14242029}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -983,7 +984,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.209362, y: 4.1790733}
+  m_Size: {x: 3.209362, y: 3.9607334}
   m_EdgeRadius: 0
 --- !u!82 &1179472849
 AudioSource:
@@ -1093,7 +1094,7 @@ GameObject:
   m_Layer: 0
   m_Name: Laser Spawn
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1105,7 +1106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1259283202}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.8, z: 0}
+  m_LocalPosition: {x: 0, y: 1.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1179472847}
@@ -1669,6 +1670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 53415903713477565, guid: 0472a8deeff5ec343988a84c616b7734,
+        type: 3}
+      propertyPath: m_Text
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0472a8deeff5ec343988a84c616b7734, type: 3}
