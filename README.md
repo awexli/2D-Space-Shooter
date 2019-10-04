@@ -32,12 +32,14 @@ Destroy(this.gameObject, 0.2f);
 - UIManager not using _lives of player class  
 - Audiosource being referenced too many times  
 - Audio for damaged player  
-- Classes referencing each other from all over the place
+- Classes referencing each other from all over the place  
+- Hard coded shieldChildIndex  
+- Allow for unique powerup audio for each powerup (very crude method working right now)  
 
 ## To be added in the future  
 - Levels  
 - Different powerups  
 - Various audio  
-- Various visual 
+- "Moving Bacground"
 - Better text 
 - Cooldown visual

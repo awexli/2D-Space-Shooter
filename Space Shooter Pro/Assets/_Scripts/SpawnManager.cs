@@ -17,7 +17,7 @@ public class SpawnManager : MonoBehaviour
     private Transform _laserSpawnPosition = null;
     private Enemy _enemy;
     private bool _stopSpawning = false;
-    private bool isTripleShotActive = false;
+    private bool _isTripleShotActive = false;
 
     void Start()
     {
@@ -69,7 +69,6 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    #region LaserSpawns
     public void SpawnLaser()
     {
 
@@ -82,7 +81,7 @@ public class SpawnManager : MonoBehaviour
 
         GameObject newLaser;
 
-        if (isTripleShotActive == true)
+        if (_isTripleShotActive == true)
             newLaser = Instantiate(_laserPrefabs[1], spawnPosition, Quaternion.identity);
         else
             newLaser = Instantiate(_laserPrefabs[0], spawnPosition, Quaternion.identity);
@@ -90,18 +89,15 @@ public class SpawnManager : MonoBehaviour
         newLaser.transform.parent = _containerObjects[0].transform;
     }
 
-    IEnumerator PowerDownTripleShot()
+    public void TripleShotActivate()
     {
-        yield return new WaitForSeconds(3.5f);
-        isTripleShotActive = false;
+        _isTripleShotActive = true;
     }
 
-    public void TripleShotActive()
+    public void TripleShotDeactivate()
     {
-        isTripleShotActive = true;
-        StartCoroutine(PowerDownTripleShot());
+        _isTripleShotActive = false;
     }
-    #endregion
 
     public void OnPlayerDeath()
     {

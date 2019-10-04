@@ -6,20 +6,16 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 0;
-    private Player _player;
-    private SpawnManager _spawnManager;
     [SerializeField]
-    private int powerUPID = 0;
+    private int _powerupId = 0;
+
     private AudioManager _audioSource;
+    private Player _player;
 
     void Start()
     {
-        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
-
-        if (_spawnManager == null)
-            Debug.Log("_spawnManager reference is NULL");
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
     }
 
     void Update()
@@ -39,23 +35,23 @@ public class Powerup : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            _audioSource.PlayAudio();
-            switch (powerUPID)
+            _audioSource.PlayPowerup();
+            switch (_powerupId)
             {
                 case 0:
-                    // prob move tripleshotactive to player class
-                    _spawnManager.TripleShotActive();
+                    _player.ShieldPowerupActive();
                     break;
                 case 1:
-                    _player.SpeedPowerupActive();
+                    _player.StartSpeedCoroutine();
                     break;
                 case 2:
-                    _player.ShieldPowerupActive();
+                    _player.StartTripleCoroutine();
                     break;
                 default:
                     break;
             }
             Destroy(this.gameObject);
         }
+
     }
 }

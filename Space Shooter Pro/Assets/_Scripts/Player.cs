@@ -4,39 +4,40 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private SpawnManager _spawnManager;
+
     [SerializeField]
     private float _speed = 9.5f;
     [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = -1f;
-    [SerializeField]
-    private float tilt = 0;
-    [SerializeField]
     private int _lives;
     private bool _isShieldActive = false;
-    [SerializeField]
-    private GameObject _shieldVisualizer = null;
+
+
     [SerializeField]
     private GameObject[] _engines = null;
-    private AudioSource _laserShotClip = null;
-    private int _childCounter;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private GameObject _explosionPrefab = null;
+    [SerializeField]
+    private GameObject _shieldVisualizer = null;
+
     [SerializeField]
     private UIManager _uiManager;
+    private AudioManager _audioSource;
+    private SpawnManager _spawnManager;
 
     void Start()
     {
         _lives = 3;
 
-        _spawnManager = GameObject.Find("Spawn Manager").GetComponent<SpawnManager>();
-        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-        _laserShotClip = GetComponent<AudioSource>();
+        _spawnManager = GameObject.FindGameObjectWithTag("Spawn Manager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.FindGameObjectWithTag("UI Manager").GetComponent<UIManager>();
+        _audioSource = GameObject.Find("Audio Manager").GetComponent<AudioManager>();
 
         if (_spawnManager == null)
             Debug.LogError("Spawn Manager reference is null");
 
-        if(_laserShotClip == null)
+        if (_audioSource == null)
             Debug.LogError("Audio source on the playeris NULL");
     }
 
@@ -54,33 +55,8 @@ public class Player : MonoBehaviour
         PlayerBounds();
     }
 
-    public void ShieldPowerupActive()
-    {
-        _isShieldActive = true;
-        _shieldVisualizer.SetActive(true);
-    }
-
-    public void ShieldPowerupDeactivate()
-    {
-        _isShieldActive = false;
-        _shieldVisualizer.SetActive(false);
-    }
-
-    IEnumerator PowerDownSpeed()
-    {
-        yield return new WaitForSeconds(4.5f);
-        _speed = 9.5f;
-    }
-
-    public void SpeedPowerupActive()
-    {
-        _speed = 11.5f;
-        StartCoroutine(PowerDownSpeed());
-    }
-
     public void Damage()
     {
-        
         if (_isShieldActive == true)
         {
             ShieldPowerupDeactivate();
@@ -88,6 +64,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            _audioSource.PlayerHit();
             _lives--;
 
             if (_lives == 2)
@@ -100,18 +77,18 @@ public class Player : MonoBehaviour
 
             if (_lives < 1)
             {
+                Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
                 _spawnManager.OnPlayerDeath();
                 this.gameObject.SetActive(false);
-                //_spriteRenderer.enabled = false;
-                //this.gameObject.GetComponent<Player>().enabled = false;
             }
         }
+
     }
 
     void FireLaser()
     {
         _canFire = Time.time + _fireRate;
-        _laserShotClip.Play();
+        _audioSource.PlayerLaserShot();
         _spawnManager.SpawnLaser();
     }
 
@@ -122,14 +99,6 @@ public class Player : MonoBehaviour
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
         transform.Translate(direction * _speed * Time.deltaTime);
-
-        // Player tilt
-        transform.rotation = Quaternion.Euler
-        (
-            0.0f,
-            horizontalInput * -tilt,
-            0.0f
-        );
     }
 
     void PlayerBounds()
@@ -153,18 +122,76 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(Boundaries.playerXMax, yPosition, 0);
     }
 
+    #region Powerups
+    public void ShieldPowerupActive()
+    {
+        _isShieldActive = true;
+        Debug.Log("SHIELD ACTIVE");
+        _shieldVisualizer.SetActive(true);
+    }
+
+    private void ShieldPowerupDeactivate()
+    {
+        _audioSource.ShieldBreak();
+        _isShieldActive = false;
+        Debug.Log("SHIELD DEACTIVATED");
+        _shieldVisualizer.SetActive(false);
+    }
+
+    IEnumerator PowerupSpeed()
+    {
+        SetSpeed(11.5f);
+        Debug.Log("SPEEDBOST ACTIVE");
+        yield return new WaitForSeconds(4.5f);
+        SetSpeed(9.5f);
+        Debug.Log("SPEEDBOST DEACTIVED");
+    }
+
+    IEnumerator PowerupTripleShot()
+    {
+        _spawnManager.TripleShotActivate();
+        Debug.Log("TRIPLESHOT ACTIVE");
+        yield return new WaitForSeconds(3.5f);
+        _spawnManager.TripleShotDeactivate();
+        Debug.Log("TRIPLESHOT DEACTIVATED");
+    }
+
+    public void StartSpeedCoroutine()
+    {
+        StartCoroutine(PowerupSpeed());
+    }
+
+    public void StartTripleCoroutine()
+    {
+        StartCoroutine(PowerupTripleShot());
+    }
+    #endregion
+
     public int GetLives()
     {
         return this._lives;
     }
 
+    public void SetSpeed(float newSpeed)
+    {
+        _speed = newSpeed;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Enemy Laser")
+
+        if (other.tag == "Enemy Laser")
         {
             Damage();
             _uiManager.UpdateLives();
         }
+
+        if (other.tag == "Enemy")
+        {
+            Damage();
+            _uiManager.UpdateLives();
+        }
+
     }
 
 }

@@ -59,28 +59,16 @@ public class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
-            OnPlayerCollsion();
+            EnemyDeathProtocol();
 
         if (other.gameObject.tag == "Shield")
-            OnShieldCollision();
+            EnemyDeathProtocol();
 
         if (other.gameObject.tag == "Laser")
         {
             OnLaserCollision();
             Destroy(other.gameObject);
         }
-    }
-
-    void OnShieldCollision()
-    {
-        _player.ShieldPowerupDeactivate();
-        EnemyDeathProtocol();
-    }
-
-    void OnPlayerCollsion()
-    {
-        _player.Damage();
-        EnemyDeathProtocol();
     }
 
     void OnLaserCollision()

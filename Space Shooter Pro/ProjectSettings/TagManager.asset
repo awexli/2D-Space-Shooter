@@ -8,6 +8,10 @@ TagManager:
   - Laser
   - Shield
   - Enemy Laser
+  - Spawn Manager
+  - UI Manager
+  - Game Manager
+  - Audio Manager
   layers:
   - Default
   - TransparentFX

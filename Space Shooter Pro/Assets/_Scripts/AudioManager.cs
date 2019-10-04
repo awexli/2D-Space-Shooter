@@ -4,14 +4,37 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
-    private AudioSource _powerupSound;
+    [SerializeField]
+    private AudioClip _powerup;
+    [SerializeField]
+    private AudioClip _laser;
+    [SerializeField]
+    private AudioClip _playerHit;
+    [SerializeField]
+    private AudioClip _shieldBreak;
+    private AudioSource _audio;
     void Start()
     {
-        _powerupSound = GetComponent<AudioSource>();
+        _audio = GetComponent<AudioSource>();
     }
 
-    public void PlayAudio()
+    public void PlayPowerup()
     {
-        _powerupSound.Play();
+        _audio.PlayOneShot(_powerup);
+    }
+
+    public void PlayerLaserShot()
+    {
+        _audio.PlayOneShot(_laser);
+    }
+
+    public void PlayerHit()
+    {
+        _audio.PlayOneShot(_playerHit);
+    }
+
+    public void ShieldBreak()
+    {
+        _audio.PlayOneShot(_shieldBreak);
     }
 }

@@ -10,12 +10,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        //if r key pressed
-        //reload scene
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver == true)
-        {
             SceneManager.LoadScene(1);
-        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
     }
 
     public void GameOver()
