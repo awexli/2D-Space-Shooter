@@ -1,5 +1,8 @@
 # 2d_space_shooter
 
+DL the zip file and extract the folder, then run the .exe file named 'Space Shooter Pro.exe'
+https://drive.google.com/file/d/1FKneP2mfO856bx5D0Ib1evbsUyZmM7he/view?usp=sharing
+
 ## Bugs  
 - At game over, Object reference not set to an instance of an object - Powerup.Start () (at Assets/_Scripts/Powerup.cs:17).  
 >> fixed: was due to coroutine between 2-8 seconds when spawning powerups in SpawnPowerupRoutine()  
